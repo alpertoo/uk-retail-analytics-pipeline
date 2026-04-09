@@ -152,25 +152,25 @@ Expected output:
 
 ## Project Structure
 uk-retail-analytics-pipeline/
-├── .github/
-│ └── workflows/
-│ └── bruin-pipeline.yml # CI/CD validation on every push
-├── assets/
-│ ├── raw/
-│ │ ├── raw_uk_retail.py # Python ingestion asset
-│ │ └── requirements.txt # pandas, openpyxl
-│ ├── staging/
-│ │ └── stg_retail.sql # Cleaning and enrichment
-│ └── mart/
-│ ├── mart_monthly_revenue.sql
-│ ├── mart_product_performance.sql
-│ ├── mart_customer_rfm.sql
-│ ├── mart_country_analysis.sql
-│ └── mart_cancellation_analysis.sql
-├── seeds/ # Dataset lives here, not tracked in git
-├── .bruin.yml # DuckDB connection config, not tracked in git
-├── .gitignore
-└── pipeline.yml # Pipeline definition and daily schedule
+  .github/
+  workflows/
+    bruin-pipeline.yml # CI/CD validation on every push
+  assets/
+    raw/
+      raw_uk_retail.py # Python ingestion asset
+      requirements.txt # pandas, openpyxl
+    staging/
+      stg_retail.sql # Cleaning and enrichment
+    mart/
+      mart_monthly_revenue.sql
+      mart_product_performance.sql
+      mart_customer_rfm.sql
+      mart_country_analysis.sql
+      mart_cancellation_analysis.sql
+    seeds/ # Dataset lives here, not tracked in git
+.bruin.yml # DuckDB connection config, not tracked in git
+.gitignore
+pipeline.yml # Pipeline definition and daily schedule
 
 ---
 
