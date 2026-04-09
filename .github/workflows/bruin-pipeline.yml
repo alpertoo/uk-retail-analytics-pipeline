@@ -1,0 +1,30 @@
+name: Bruin Pipeline CI
+
+on:
+  push:
+    branches:
+      - main
+  schedule:
+    # Runs daily at 6am UTC
+    - cron: '0 6 * * *'
+
+jobs:
+  validate:
+    name: Validate Bruin Pipeline
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install Bruin CLI
+        run: curl -LsSf https://getbruin.com/install/cli | sh
+
+      - name: Add Bruin to PATH
+        run: echo "$HOME/.bruin" >> $GITHUB_PATH
+
+      - name: Validate pipeline
+        run: bruin validate assets/
+
+      - name: Show pipeline lineage
+        run: bruin lineage assets/ --config-file .bruin.yml || true

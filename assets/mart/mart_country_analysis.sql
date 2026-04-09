@@ -1,56 +1,68 @@
 /* @bruin
+
 name: mart.country_analysis
 type: duckdb.sql
-depends:
-  - staging.stg_retail
+description: Revenue, order and customer breakdown by country for the UK Online Retail dataset. Identifies the most valuable international markets and compares their cancellation behaviour. Useful for international expansion and market prioritisation decisions.
 
 materialization:
   type: table
 
-description: "Revenue, order and customer breakdown by country for the UK Online Retail dataset. Identifies the most valuable international markets and compares their cancellation behaviour. Useful for international expansion and market prioritisation decisions."
+depends:
+  - staging.stg_retail
 
 columns:
   - name: country
-    description: "Customer country."
+    type: VARCHAR
+    description: Customer country.
     checks:
       - name: not_null
       - name: unique
   - name: total_revenue
-    description: "Total gross revenue from the country in GBP."
+    type: DOUBLE
+    description: Total gross revenue from the country in GBP.
     checks:
       - name: not_null
   - name: total_orders
-    description: "Number of distinct invoices from the country."
+    type: BIGINT
+    description: Number of distinct invoices from the country.
     checks:
       - name: not_null
   - name: total_customers
-    description: "Number of distinct customers from the country."
+    type: BIGINT
+    description: Number of distinct customers from the country.
     checks:
       - name: not_null
   - name: total_items_sold
-    description: "Total units sold to customers in the country."
+    type: DECIMAL(38,0)
+    description: Total units sold to customers in the country.
     checks:
       - name: not_null
   - name: avg_order_value
-    description: "Average revenue per order in GBP."
+    type: DOUBLE
+    description: Average revenue per order in GBP.
     checks:
       - name: not_null
   - name: cancellation_count
-    description: "Number of cancellation invoices from the country."
+    type: BIGINT
+    description: Number of cancellation invoices from the country.
     checks:
       - name: not_null
   - name: cancellation_rate_pct
-    description: "Cancellations as a percentage of total invoices from the country."
+    type: DOUBLE
+    description: Cancellations as a percentage of total invoices from the country.
     checks:
       - name: not_null
   - name: revenue_share_pct
-    description: "Country revenue as a percentage of total global revenue."
+    type: DOUBLE
+    description: Country revenue as a percentage of total global revenue.
     checks:
       - name: not_null
   - name: revenue_rank
-    description: "Rank of the country by total revenue, 1 being highest."
+    type: BIGINT
+    description: Rank of the country by total revenue, 1 being highest.
     checks:
       - name: not_null
+
 @bruin */
 
 WITH sales AS (

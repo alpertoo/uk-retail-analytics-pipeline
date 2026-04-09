@@ -1,48 +1,58 @@
 /* @bruin
+
 name: mart.monthly_revenue
 type: duckdb.sql
-depends:
-  - staging.stg_retail
+description: Monthly revenue summary for the UK Online Retail dataset. Tracks gross revenue, number of orders, number of customers, quantities sold, cancellation counts and rates over time. Useful for identifying seasonal trends and business growth.
 
 materialization:
   type: table
 
-description: "Monthly revenue summary for the UK Online Retail dataset. Tracks gross revenue, number of orders, number of customers, quantities sold, cancellation counts and rates over time. Useful for identifying seasonal trends and business growth."
+depends:
+  - staging.stg_retail
 
 columns:
   - name: year_month
-    description: "Year and month of the transactions (YYYY-MM format)."
+    type: VARCHAR
+    description: Year and month of the transactions (YYYY-MM format).
     checks:
       - name: not_null
       - name: unique
   - name: total_revenue
-    description: "Total gross revenue for the month in GBP, excluding cancellations."
+    type: DOUBLE
+    description: Total gross revenue for the month in GBP, excluding cancellations.
     checks:
       - name: not_null
   - name: total_orders
-    description: "Number of unique invoices in the month, excluding cancellations."
+    type: BIGINT
+    description: Number of unique invoices in the month, excluding cancellations.
     checks:
       - name: not_null
   - name: total_customers
-    description: "Number of unique customers who placed orders in the month."
+    type: BIGINT
+    description: Number of unique customers who placed orders in the month.
     checks:
       - name: not_null
   - name: total_items_sold
-    description: "Total units sold in the month, excluding cancellations."
+    type: DECIMAL(38,0)
+    description: Total units sold in the month, excluding cancellations.
     checks:
       - name: not_null
   - name: cancellation_count
-    description: "Number of cancellation invoices in the month."
+    type: BIGINT
+    description: Number of cancellation invoices in the month.
     checks:
       - name: not_null
   - name: cancellation_rate_pct
-    description: "Cancellations as a percentage of total invoices (including cancellations)."
+    type: DOUBLE
+    description: Cancellations as a percentage of total invoices (including cancellations).
     checks:
       - name: not_null
   - name: avg_order_value
-    description: "Average revenue per order in GBP."
+    type: DOUBLE
+    description: Average revenue per order in GBP.
     checks:
       - name: not_null
+
 @bruin */
 
 WITH monthly_sales AS (

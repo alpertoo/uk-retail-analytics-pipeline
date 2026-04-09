@@ -1,48 +1,58 @@
 /* @bruin
+
 name: mart.cancellation_analysis
 type: duckdb.sql
-depends:
-  - staging.stg_retail
+description: Cancellation trends and most frequently cancelled products for the UK Online Retail dataset. Tracks monthly cancellation volumes, revenue lost to cancellations, and identifies the products and countries with the highest cancellation activity. Critical for operational risk management.
 
 materialization:
   type: table
 
-description: "Cancellation trends and most frequently cancelled products for the UK Online Retail dataset. Tracks monthly cancellation volumes, revenue lost to cancellations, and identifies the products and countries with the highest cancellation activity. Critical for operational risk management."
+depends:
+  - staging.stg_retail
 
 columns:
   - name: year_month
-    description: "Year and month of the cancellations (YYYY-MM format)."
+    type: VARCHAR
+    description: Year and month of the cancellations (YYYY-MM format).
     checks:
       - name: not_null
       - name: unique
   - name: cancellation_count
-    description: "Number of cancellation invoices in the month."
+    type: BIGINT
+    description: Number of cancellation invoices in the month.
     checks:
       - name: not_null
   - name: cancelled_items
-    description: "Total units cancelled in the month."
+    type: DECIMAL(38,0)
+    description: Total units cancelled in the month.
     checks:
       - name: not_null
   - name: revenue_lost
-    description: "Total revenue lost to cancellations in the month in GBP."
+    type: DOUBLE
+    description: Total revenue lost to cancellations in the month in GBP.
     checks:
       - name: not_null
   - name: unique_customers_cancelled
-    description: "Number of distinct customers who cancelled in the month."
+    type: BIGINT
+    description: Number of distinct customers who cancelled in the month.
     checks:
       - name: not_null
   - name: unique_products_cancelled
-    description: "Number of distinct products cancelled in the month."
+    type: BIGINT
+    description: Number of distinct products cancelled in the month.
     checks:
       - name: not_null
   - name: top_cancelled_product
-    description: "The stock code of the most cancelled product in the month by quantity."
+    type: VARCHAR
+    description: The stock code of the most cancelled product in the month by quantity.
     checks:
       - name: not_null
   - name: top_cancelled_country
-    description: "The country with the most cancellation invoices in the month."
+    type: VARCHAR
+    description: The country with the most cancellation invoices in the month.
     checks:
       - name: not_null
+
 @bruin */
 
 WITH monthly_cancellations AS (

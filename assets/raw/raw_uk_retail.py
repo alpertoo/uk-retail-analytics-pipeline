@@ -1,48 +1,58 @@
-""" @bruin
+"""@bruin
+
 name: raw.uk_retail
-type: python
+description: Raw ingestion of the UK Online Retail II dataset (2009-2011). Contains all transactions from both year sheets of the source Excel file before any cleaning or transformation.
 connection: duckdb-default
 
 materialization:
-    type: table
+  type: table
 
-depends:
-    []
-
-description: "Raw ingestion of the UK Online Retail II dataset (2009-2011). Contains all transactions from both year sheets of the source Excel file before any cleaning or transformation."
+secrets:
+  - key: duckdb-default
+    inject_as: duckdb-default
 
 columns:
   - name: invoice
-    description: "Invoice number. If it starts with 'C', it indicates a cancellation."
+    type: VARCHAR
+    description: Invoice number. If it starts with 'C', it indicates a cancellation.
     checks:
       - name: not_null
   - name: stock_code
-    description: "Product code. A 5-digit number uniquely assigned to each product."
+    type: VARCHAR
+    description: Product code. A 5-digit number uniquely assigned to each product.
     checks:
       - name: not_null
   - name: description
-    description: "Product name."
+    type: VARCHAR
+    description: Product name.
   - name: quantity
-    description: "Number of units per transaction. Negative values indicate returns or cancellations."
+    type: BIGINT
+    description: Number of units per transaction. Negative values indicate returns or cancellations.
     checks:
       - name: not_null
   - name: invoice_date
-    description: "Date and time of the transaction."
+    type: TIMESTAMP
+    description: Date and time of the transaction.
     checks:
       - name: not_null
   - name: price
-    description: "Unit price in GBP sterling."
+    type: DOUBLE
+    description: Unit price in GBP sterling.
     checks:
       - name: not_null
   - name: customer_id
-    description: "Unique customer identifier. NULLs exist where customer was not registered."
+    type: VARCHAR
+    description: Unique customer identifier. NULLs exist where customer was not registered.
   - name: country
-    description: "Country where the customer resides."
+    type: VARCHAR
+    description: Country where the customer resides.
     checks:
       - name: not_null
   - name: source_sheet
-    description: "Source Excel sheet — either '2009-2010' or '2010-2011'."
-@bruin """
+    type: VARCHAR
+    description: Source Excel sheet — either '2009-2010' or '2010-2011'.
+
+@bruin"""
 
 import pandas as pd
 
