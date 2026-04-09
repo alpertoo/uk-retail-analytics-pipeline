@@ -57,9 +57,16 @@ columns:
 import pandas as pd
 
 def materialize():
+    import os
+    
+    # Build absolute path to the seeds folder relative to this script
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    project_root = os.path.join(script_dir, "..", "..")
+    file_path = os.path.join(project_root, "seeds", "online_retail_II.xlsx")
+
     # Read both sheets from the Excel file
-    df_2009 = pd.read_excel("seeds/online_retail_II.xlsx", sheet_name="Year 2009-2010", engine="openpyxl")
-    df_2010 = pd.read_excel("seeds/online_retail_II.xlsx", sheet_name="Year 2010-2011", engine="openpyxl")
+    df_2009 = pd.read_excel(file_path, sheet_name="Year 2009-2010", engine="openpyxl")
+    df_2010 = pd.read_excel(file_path, sheet_name="Year 2010-2011", engine="openpyxl")
 
     # Add a source sheet column for traceability before combining
     df_2009["source_sheet"] = "2009-2010"
