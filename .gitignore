@@ -213,4 +213,5 @@ logs/*.log
 logs/queriesseeds/
 *.duckdb
 
-logs/queries
+logs/queries.DS_Store
+assets/.DS_Store
