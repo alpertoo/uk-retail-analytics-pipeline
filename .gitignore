@@ -212,3 +212,5 @@ logs/*.log
 *.py[cod]
 logs/queriesseeds/
 *.duckdb
+
+logs/queries
