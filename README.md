@@ -150,27 +150,24 @@ Expected output:
 
 ---
 
+---
+
 ## Project Structure
-uk-retail-analytics-pipeline/
-  .github/
-  workflows/
-    bruin-pipeline.yml # CI/CD validation on every push
-  assets/
-    raw/
-      raw_uk_retail.py # Python ingestion asset
-      requirements.txt # pandas, openpyxl
-    staging/
-      stg_retail.sql # Cleaning and enrichment
-    mart/
-      mart_monthly_revenue.sql
-      mart_product_performance.sql
-      mart_customer_rfm.sql
-      mart_country_analysis.sql
-      mart_cancellation_analysis.sql
-    seeds/ # Dataset lives here, not tracked in git
-.bruin.yml # DuckDB connection config, not tracked in git
-.gitignore
-pipeline.yml # Pipeline definition and daily schedule
+
+The repository is organised as follows:
+
+- `.github/workflows/bruin-pipeline.yml` - CI/CD workflow that validates the pipeline on every push
+- `assets/raw/raw_uk_retail.py` — Python ingestion asset that reads the Excel file and loads it into DuckDB
+- `assets/raw/requirements.txt` — Python dependencies for the ingestion asset
+- `assets/staging/stg_retail.sql` — Staging SQL asset that cleans and enriches the raw data
+- `assets/mart/mart_monthly_revenue.sql` - Monthly revenue trends and cancellation rates
+- `assets/mart/mart_product_performance.sql` — Product rankings by revenue and return rate
+- `assets/mart/mart_customer_rfm.sql` — Customer RFM segmentation
+- `assets/mart/mart_country_analysis.sql` — Country level revenue and cancellation analysis
+- `assets/mart/mart_cancellation_analysis.sql` — Monthly cancellation trends and revenue lost
+- `pipeline.yml` — Pipeline definition and daily schedule
+- `.bruin.yml` — DuckDB connection config, not tracked in git
+- `seeds/` — Dataset folder, not tracked in git
 
 ---
 
